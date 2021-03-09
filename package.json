@@ -1,0 +1,32 @@
+{
+  "name": "app-nodejs-postgres",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lucas-Moreno/app-nodejs-postgres.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lucas-Moreno/app-nodejs-postgres/issues"
+  },
+  "homepage": "https://github.com/Lucas-Moreno/app-nodejs-postgres#readme",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "nodemon": "^2.0.7",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "figlet": "^1.5.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
+    "yarn": "^1.22.10"
+  }
+}
