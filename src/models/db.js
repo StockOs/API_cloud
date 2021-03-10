@@ -1,7 +1,6 @@
 const mysql = require("mysql2");
 const dbConfig = require("../config/db.config.js");
 
-// Create a connection to the database
 const pool = mysql.createPool({
   port: dbConfig.PORT,
   host: dbConfig.HOST,
@@ -13,7 +12,6 @@ const pool = mysql.createPool({
   queueLimit: 100,
 });
 
-// query dynamic
 pool.simpleQuery = async (query, arrayValue) => {
   const [rows, fields] = await pool.promise().query(query, arrayValue);
   if (rows && fields) {
