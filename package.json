@@ -5,18 +5,19 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "worker": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lucas-Moreno/app-nodejs-postgres.git"
+    "url": "git+https://github.com/alexannebrunold/API_cloud.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Lucas-Moreno/app-nodejs-postgres/issues"
+    "url": "https://github.com/alexannebrunold/API_cloud.git"
   },
-  "homepage": "https://github.com/Lucas-Moreno/app-nodejs-postgres#readme",
+  "homepage": "https://github.com/alexannebrunold/API_cloud.git#readme",
   "dependencies": {
     "app-root-path": "^3.0.0",
     "nodemon": "^2.0.7",

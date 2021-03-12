@@ -3,6 +3,7 @@ const UserModel = require("../../models/users/users.model.js");
 const {
   response200WithData,
   response200WithMessage,
+  response201WithMessage,
   response400WithMessage,
   response500WithMessage,
 } = require("../../helpers/expressRes.js");
@@ -17,7 +18,6 @@ const register = async (req, res) => {
     const data = await UserModel.addUser(name, email, password, business);
     return response200WithMessage(res, "you are registered");
   } catch (e) {
-    console.log(e);
     return response500WithMessage(res, e);
   }
 };
@@ -53,8 +53,55 @@ const getInfo = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  let objectUpdate = new Object();
+  let id = req.params.id;
+
+  if (req.body.name) {
+    objectUpdate["name"] = req.body.name;
+  }
+
+  if (req.body.email) {
+    objectUpdate["email"] = req.body.email;
+  }
+
+  if (req.body.password) {
+    objectUpdate["password"] = req.body.password;
+  }
+
+  if (req.body.business) {
+    objectUpdate["business"] = req.body.business;
+  }
+
+  try {
+    const data = UserModel.updateUser(id, objectUpdate);
+    if (!data) {
+      return response400WithMessage(res, "Oups ! error T_T");
+    }
+    return response201WithMessage(res, "Updated successfuly");
+  } catch (e) {
+    return response500WithMessage(res, "Oups ! error T_T");
+  }
+};
+
+const deleteUser = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const data = UserModel.deleteUser(id);
+    if (!data) {
+      return response400WithMessage(res, "Oups ! error T_T");
+    }
+    return response201WithMessage(res, "deleted successfuly");
+  } catch (e) {
+    return response500WithMessage(res, "Oups ! error T_T");
+  }
+};
+
 module.exports = {
   register,
   signIn,
   getInfo,
+  updateUser,
+  deleteUser,
 };

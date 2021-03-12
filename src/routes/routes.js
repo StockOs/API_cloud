@@ -14,5 +14,7 @@ module.exports = (app) => {
   // Routes User
   app.post("/api/user/register", userController.register);
   app.get("/api/user/signIn", userController.signIn);
-  app.get("api/user/info/:id", userController.getInfo);
+  app.get("/api/user/info/:id", userController.getInfo);
+  app.put("/api/user/:id", userController.updateUser);
+  app.delete("/api/user/:id", userController.deleteUser);
 };

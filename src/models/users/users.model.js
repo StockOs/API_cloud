@@ -29,9 +29,24 @@ const getInfo = async (id) => {
   return res;
 };
 
+const updateUser = async (id, objectUpdate) => {
+  const res = await db.simpleQuery("UPDATE users SET ? WHERE id = ?", [
+    objectUpdate,
+    id,
+  ]);
+  return res;
+};
+
+const deleteUser = async (id) => {
+  const res = await db.simpleQuery("DELETE FROM users WHERE id=?", [id]);
+  return res;
+};
+
 module.exports = {
   verifyIduser,
   addUser,
   signIn,
   getInfo,
+  updateUser,
+  deleteUser,
 };
