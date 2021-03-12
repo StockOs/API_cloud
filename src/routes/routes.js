@@ -2,6 +2,7 @@ module.exports = (app) => {
   // database Controller
   const databaseController = require("../controllers/database/database.controller.js");
   const userController = require("../controllers/users/users.controller.js");
+  const categorieController = require("../controllers/categories/categories.controller.js");
 
   // Welcome API
   app.get("/", (req, res) => {
@@ -17,4 +18,8 @@ module.exports = (app) => {
   app.get("/api/user/info/:id", userController.getInfo);
   app.put("/api/user/:id", userController.updateUser);
   app.delete("/api/user/:id", userController.deleteUser);
+
+  // Routes categories
+  app.get("/api/categories", categorieController.getAllCategories);
+  app.get("/api/categories/:id", categorieController.getCategory);
 };
