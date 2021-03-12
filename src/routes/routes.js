@@ -12,5 +12,7 @@ module.exports = (app) => {
   app.get("/dbtest", databaseController.testDbConnection);
 
   // Routes User
-  app.get("/api/users", userController.getUser);
+  app.post("/api/user/register", userController.register);
+  app.get("/api/user/signIn", userController.signIn);
+  app.get("api/user/info/:id", userController.getInfo);
 };

@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 require("./src/routes/routes.js")(app);
 
-const PORT = process.env.API_PORT || 80;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
   figlet(
     process.env.NAME_APP,
