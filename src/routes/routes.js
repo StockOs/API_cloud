@@ -1,8 +1,13 @@
 module.exports = (app) => {
-  // database Controller
+  const {
+    verifyToken,
+  } = require("../middleware/firebase/firebaseMiddleware.js");
+
+  // Controller
   const databaseController = require("../controllers/database/database.controller.js");
   const userController = require("../controllers/users/users.controller.js");
   const categorieController = require("../controllers/categories/categories.controller.js");
+  const authentificationController = require("../controllers/authentification/authentification.js");
 
   // Welcome API
   app.get("/", (req, res) => {
@@ -12,10 +17,17 @@ module.exports = (app) => {
   // Route Database
   app.get("/dbtest", databaseController.testDbConnection);
 
-  // Routes User
-  app.post("/api/user/register", userController.register);
-  app.get("/api/user/signIn", userController.signIn);
-  app.get("/api/user/info/:id", userController.getInfo);
+  // API VERIFY REQUETE
+  /* checks if the API is well secured by a bearer Token */
+  app.use("/api/", verifyToken);
+
+  // Routes auth
+  app.post("/auth/user/validate", authentificationController.validateUser);
+  app.post("/auth/user/register", authentificationController.register);
+  app.post("/auth/user/login", authentificationController.login);
+
+  // Routes user
+  app.get("/api/user/info", userController.getInfo);
   app.put("/api/user/:id", userController.updateUser);
   app.delete("/api/user/:id", userController.deleteUser);
 

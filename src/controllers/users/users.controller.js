@@ -44,7 +44,8 @@ const signIn = async (req, res) => {
 };
 
 const getInfo = async (req, res) => {
-  const id = req.params.id;
+  const id = req.user[1];
+
   try {
     const data = await UserModel.getInfo(id);
     return response200WithData(res, data);
