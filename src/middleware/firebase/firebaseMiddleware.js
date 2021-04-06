@@ -3,6 +3,7 @@ const admin = require("firebase-admin");
 const UserModel = require("../../models/users/users.model");
 
 const {
+  response400WithMessage,
   response401WithMessage,
   response500WithMessage,
 } = require("../../helpers/expressRes");
@@ -21,10 +22,15 @@ const extractToken = (req) => {
 
 const verifyToken = async (req, res, next) => {
   const token = extractToken(req);
-
+  if (token == null) {
+    return response400WithMessage(res, "Forgot to provide a firebase token");
+  }
   admin
     .auth()
     .verifyIdToken(token)
+    .catch(function (e) {
+      throw new Error("Invalid token");
+    })
     .then(async function (decodedToken) {
       try {
         const data = await UserModel.findByUID(decodedToken.uid);
@@ -38,21 +44,14 @@ const verifyToken = async (req, res, next) => {
           } else {
             name = decodedToken.name;
           }
-          let business;
-          if (!decodedToken.business) {
-            business = "Test";
-          } else {
-            business = decodedToken.business;
-          }
           const creatUSer = await UserModel.createUserByFirebase(
             name,
             decodedToken.email,
             decodedToken.uid,
-            business,
             false
           );
           if (!creatUSer) {
-            return response401WithMessage(res, "Invalid token");
+            return response401WithMessage(res, "Problem during user creation");
           }
           const searchUserByUid = await UserModel.findByUID(decodedToken.uid);
           if (searchUserByUid) {
@@ -64,7 +63,7 @@ const verifyToken = async (req, res, next) => {
       }
     })
     .catch(function (e) {
-      return response401WithMessage(res, "Invalid token");
+      return response401WithMessage(res, e.message);
     });
 };
 

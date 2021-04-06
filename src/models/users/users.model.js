@@ -8,10 +8,10 @@ const findByUID = async (uid) => {
   return res.length > 0 ? res : false;
 };
 
-const createUserByFirebase = async (name, email, uid, business) => {
+const createUserByFirebase = async (name, email, uid) => {
   const res = await db.simpleQuery(
-    "INSERT INTO users SET name=?, firebaseUid=?, email=?, business=?",
-    [name, uid, email, business]
+    "INSERT INTO users SET name=?, firebaseUid=?, email=?",
+    [name, uid, email]
   );
   return res;
 };
