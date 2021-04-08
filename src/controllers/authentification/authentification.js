@@ -120,10 +120,12 @@ const login = async (req, res) => {
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(async function (result) {
+      console.log('LOGIN', result)
       const idToken = await result.user.getIdToken(false);
       return response201WithData(res, idToken);
     })
     .catch(function (e) {
+      console.log('LOGIN', e)
       return response401WithMessage(res, "Login failed");
     });
 };
