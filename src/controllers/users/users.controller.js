@@ -11,11 +11,10 @@ const {
 const register = async (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
-  const password = req.body.password;
-  const business = req.body.business;
+  const password = req.body.password
 
   try {
-    const data = await UserModel.addUser(name, email, password, business);
+    const data = await UserModel.addUser(name, email, password)
     return response200WithMessage(res, "you are registered");
   } catch (e) {
     return response500WithMessage(res, e);

@@ -10,6 +10,7 @@ const { USERNAME_PATTERN } = require("../../helpers/regex/userconst.js");
 const {
   response201WithMessage,
   response201WithData,
+  response400WithMessage,
   response401WithMessage,
   response500WithMessage,
 } = require("../../helpers/expressRes");
@@ -39,7 +40,6 @@ const validateUser = async (req, res) => {
                 userRecord.displayName,
                 userRecord.email,
                 userRecord.uid,
-                userRecord.business,
                 true
               );
 
@@ -87,13 +87,6 @@ const register = async (req, res) => {
   if (!validator.validate(req.body.email)) {
     return response400WithMessage(res, "Incorrect email spelling");
   }
-  // verif email is not empty
-  if (!req.body.business) {
-    return response400WithMessage(
-      res,
-      "Your request does not contain any business"
-    );
-  }
 
   admin
     .auth()
@@ -101,7 +94,6 @@ const register = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       displayName: req.body.name,
-      business: req.body.business,
     })
     .then(() => {
       return response201WithMessage(res, "Register successful");
@@ -115,7 +107,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
+console.log('bonjour')
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
@@ -124,6 +116,7 @@ const login = async (req, res) => {
       return response201WithData(res, idToken);
     })
     .catch(function (e) {
+      console.log('error')
       return response401WithMessage(res, "Login failed");
     });
 };
