@@ -16,7 +16,7 @@ module.exports = (app) => {
 
   // Route Database
   app.get("/dbtest", databaseController.testDbConnection);
-
+  app.post("/auth/user/login", authentificationController.login);
   // API VERIFY REQUETE
   /* checks if the API is well secured by a bearer Token */
   app.use("/api/", verifyToken);
@@ -24,7 +24,7 @@ module.exports = (app) => {
   // Routes auth
   app.post("/auth/user/validate", authentificationController.validateUser);
   app.post("/auth/user/register", authentificationController.register);
-  app.post("/auth/user/login", authentificationController.login);
+
 
   // Routes user
   app.get("/api/user/info", userController.getInfo);

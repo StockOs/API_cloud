@@ -42,10 +42,10 @@ const getUserStatusModel = async (id) => {
 
 /* ******* */
 
-const addUser = async (name, email, password, business) => {
+const addUser = async (name, email, password) => {
   const res = await db.simpleQuery(
-    "INSERT INTO users (name, email, password, business) VALUE (?,?,?,?)",
-    [name, email, password, business]
+    "INSERT INTO users (name, email, password) VALUE (?,?,?)",
+    [name, email, password]
   );
   return res;
 };
