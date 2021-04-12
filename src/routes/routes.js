@@ -40,6 +40,7 @@ module.exports = (app) => {
   // Routes items
   app.get('/api/items', itemController.getAllItems)
   app.get('/api/items/:id', itemController.getItemById)
+  app.post('/api/item', itemController.addItem)
   app.put('/api/items/:id', itemController.updateItem)
   app.delete('/api/items/:id', itemController.deleteItem)
 }
