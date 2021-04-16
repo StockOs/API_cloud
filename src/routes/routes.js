@@ -39,4 +39,5 @@ module.exports = (app) => {
   app.get("/api/items", itemController.getAllItems)
   app.get("/api/items/:keyItem", itemController.getItem)
   app.delete("/api/items/:keyItem", itemController.deleteItem)
+  app.put("/api/items/:keyItem", itemController.updateItem)
 }

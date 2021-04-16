@@ -6,6 +6,11 @@ const checkItem = async (userId, name) => {
   return res[0]
 }
 
+const checkQuantity = async (userId, keyItem) => {
+  const res = await db.simpleQuery("SELECT quantity FROM orders WHERE userId=? AND keyItem=? ", [userId, keyItem])
+  return res[0]
+}
+
 const createItem = async (userId, name, quantity, price) => {
   const resItemName = await db.simpleQuery("INSERT INTO items_name (userId, name) VALUE (?,?)", [userId, name])
   const resItem = await db.simpleQuery("SELECT * FROM items_name WHERE userId=? AND name=?", [userId, name])
@@ -98,11 +103,25 @@ const deleteItem = async (userId, keyItem) => {
   return deleteItem
 }
 
+const updateItem = async (objectUpdate, userId, keyItem) => {
+  console.log(objectUpdate.quantity)
+  const resName = db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
+  const resPrice = db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
+
+  const resDeleteQuantity = db.simpleQuery("DELETE FROM orders WHERE userId=? AND keyItem=?", [userId, keyItem])
+  const resUpdateQuantity = db.simpleQuery("INSERT INTO orders (quantity, userId, keyItem) VALUES(?,?,?)", [objectUpdate.quantity, userId, keyItem])
+
+  const update = await Promise.all([resName, resPrice, resDeleteQuantity, resUpdateQuantity])
+  return update
+}
+
 module.exports = {
   createItem,
   checkItem,
+  checkQuantity,
   addItemAgain,
   getAllItems,
   getItem,
   deleteItem,
+  updateItem,
 }
