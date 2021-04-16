@@ -89,10 +89,20 @@ const getItem = async (userId, keyItem) => {
   return promise
 }
 
+const deleteItem = async (userId, keyItem) => {
+  const deleteFromName = db.simpleQuery("DELETE FROM items_name WHERE userId = ? AND keyItem=?", [userId, keyItem])
+  const deleteFromPrice = db.simpleQuery("DELETE FROM items_price WHERE userId = ? AND keyItem=?", [userId, keyItem])
+  const deleteFromOrders = db.simpleQuery("DELETE FROM orders WHERE userId = ? AND keyItem=?", [userId, keyItem])
+
+  const deleteItem = await Promise.all([deleteFromName, deleteFromPrice, deleteFromOrders])
+  return deleteItem
+}
+
 module.exports = {
   createItem,
   checkItem,
   addItemAgain,
   getAllItems,
   getItem,
+  deleteItem,
 }

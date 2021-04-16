@@ -37,5 +37,6 @@ module.exports = (app) => {
   // Routes items
   app.post("/api/items", itemController.createItem)
   app.get("/api/items", itemController.getAllItems)
-  app.get("/api/items/:item", itemController.getItem)
+  app.get("/api/items/:keyItem", itemController.getItem)
+  app.delete("/api/items/:keyItem", itemController.deleteItem)
 }

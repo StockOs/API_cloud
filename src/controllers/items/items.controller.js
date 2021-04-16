@@ -39,10 +39,10 @@ const getAllItems = async (req, res) => {
 
 const getItem = async (req, res) => {
   const userId = req.user[1]
-  const item = req.params.item
+  const keyItem = req.params.keyItem
 
   try {
-    const data = await ItemModel.getItem(userId, item)
+    const data = await ItemModel.getItem(userId, keyItem)
     if (!data) {
       return response400WithMessage(res, "You don't have items")
     }
@@ -52,5 +52,20 @@ const getItem = async (req, res) => {
     return response500WithMessage(res, "Oups ! error T_T")
   }
 }
+const deleteItem = async (req, res) => {
+  const userId = req.user[1]
+  const keyItem = req.params.keyItem
 
-module.exports = { createItem, getAllItems, getItem }
+  try {
+    const data = await ItemModel.deleteItem(userId, keyItem)
+    if (!data) {
+      return response400WithMessage(res, "This item doesn't exist")
+    }
+    return response201WithMessage(res, "deleted successful")
+  } catch (e) {
+    console.log(e)
+    return response500WithMessage(res, "Oups ! error T_T")
+  }
+}
+
+module.exports = { createItem, getAllItems, getItem, deleteItem }
