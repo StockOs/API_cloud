@@ -1,3 +1,4 @@
+const { promise } = require("../db.js")
 const db = require("../db.js")
 
 const checkItem = async (userId, name) => {
@@ -38,13 +39,54 @@ const addItemAgain = async (data, userId, quantity) => {
 }
 
 const getAllItems = async (userId) => {
-  const res = await db.simpleQuery("SELECT * FROM items_name WHERE userId=?", [userId])
-  return res
+  const res = await db.simpleQuery(
+    "SELECT orders.userId, orders.keyItem, items_name.name, orders.quantity, items_price.price, sum(quantity) FROM orders INNER JOIN items_price ON items_price.keyItem = orders.keyItem INNER JOIN items_name ON orders.keyItem = items_name.keyItem WHERE items_name.userId=? group by orders.keyItem",
+    [userId]
+  )
+  let promise = []
+  for (const table of res) {
+    let userId = table.userId
+    let keyItem = table.keyItem
+    let quantity = table["sum(quantity)"]
+    let price = table.price
+    let name = table.name
+
+    let object = {
+      userId: userId,
+      name: name,
+      keyItem: keyItem,
+      quantity: quantity,
+      price: price,
+    }
+    promise.push(object)
+  }
+
+  return promise
 }
 
-const getItem = async (userId, item) => {
-  const res = await db.simpleQuery("SELECT * FROM items_name WHERE userId=? AND name=?", [userId, item])
-  return res
+const getItem = async (userId, keyItem) => {
+  const res = await db.simpleQuery(
+    "SELECT orders.userId, orders.keyItem, orders.quantity, items_name.name, items_price.price, sum(quantity) FROM orders INNER JOIN items_price ON items_price.keyItem = orders.keyItem INNER JOIN items_name ON orders.keyItem = items_name.keyItem WHERE items_name.userId=? AND orders.keyItem=? group by orders.keyItem",
+    [userId, keyItem]
+  )
+  let promise = []
+  for (const table of res) {
+    let userId = table.userId
+    let keyItem = table.keyItem
+    let quantity = table["sum(quantity)"]
+    let price = table.price
+    let name = table.name
+
+    let object = {
+      userId: userId,
+      name: name,
+      keyItem: keyItem,
+      quantity: quantity,
+      price: price,
+    }
+    promise.push(object)
+  }
+  return promise
 }
 
 module.exports = {

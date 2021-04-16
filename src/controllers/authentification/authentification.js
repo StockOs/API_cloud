@@ -7,20 +7,11 @@ const UserModel = require("../../models/users/users.model.js")
 
 const { USERNAME_PATTERN } = require("../../helpers/regex/userconst.js")
 
-<<<<<<< HEAD
 const { response201WithMessage, response201WithData, response400WithMessage, response401WithMessage, response500WithMessage } = require("../../helpers/expressRes")
-=======
-const {
-  response201WithMessage,
-  response201WithData,
-  response400WithMessage,
-  response401WithMessage,
-  response500WithMessage,
-} = require("../../helpers/expressRes");
->>>>>>> fb74ff7179aa90ad1206474aa419f20d1a1fa5f7
 
 const validateUser = async (req, res) => {
   const token = firebaseMiddleware.extractToken(req)
+
   admin
     .auth()
     .verifyIdToken(token)
@@ -37,16 +28,7 @@ const validateUser = async (req, res) => {
             }
           } else {
             try {
-<<<<<<< HEAD
               const creatUSer = await UserModel.createUserByFirebase(userRecord.displayName, userRecord.email, userRecord.uid, true)
-=======
-              const creatUSer = await UserModel.createUserByFirebase(
-                userRecord.displayName,
-                userRecord.email,
-                userRecord.uid,
-                true
-              );
->>>>>>> fb74ff7179aa90ad1206474aa419f20d1a1fa5f7
 
               if (creatUSer) {
                 return response201WithData(res, creatUSer)
@@ -86,13 +68,6 @@ const register = async (req, res) => {
   if (!validator.validate(req.body.email)) {
     return response400WithMessage(res, "Incorrect email spelling")
   }
-<<<<<<< HEAD
-  // verif email is not empty
-  if (!req.body.business) {
-    return response400WithMessage(res, "Your request does not contain any business")
-  }
-=======
->>>>>>> fb74ff7179aa90ad1206474aa419f20d1a1fa5f7
 
   admin
     .auth()
@@ -111,15 +86,9 @@ const register = async (req, res) => {
 
 // Login User in app (check on Firebase)
 const login = async (req, res) => {
-<<<<<<< HEAD
   const email = req.body.email
   const password = req.body.password
 
-=======
-  const email = req.body.email;
-  const password = req.body.password;
-console.log('bonjour')
->>>>>>> fb74ff7179aa90ad1206474aa419f20d1a1fa5f7
   firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
@@ -128,16 +97,10 @@ console.log('bonjour')
       return response201WithData(res, idToken)
     })
     .catch(function (e) {
-<<<<<<< HEAD
+      console.log(e)
       return response401WithMessage(res, "Login failed")
     })
 }
-=======
-      console.log('error')
-      return response401WithMessage(res, "Login failed");
-    });
-};
->>>>>>> fb74ff7179aa90ad1206474aa419f20d1a1fa5f7
 
 module.exports = {
   validateUser,

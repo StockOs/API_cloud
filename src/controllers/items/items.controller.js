@@ -12,10 +12,10 @@ const createItem = async (req, res) => {
     const data = await ItemModel.checkItem(userId, name)
     if (data === undefined) {
       ItemModel.createItem(userId, name, quantity, price)
-      return response201WithMessage(res, "item enregistred")
+      return response201WithMessage(res, "item saved")
     } else {
       ItemModel.addItemAgain(data, userId, quantity)
-      return response201WithMessage(res, "Item enregistred")
+      return response201WithMessage(res, "Item saved")
     }
   } catch (e) {
     return response500WithMessage(res, "Oups ! error T_T")
@@ -32,6 +32,7 @@ const getAllItems = async (req, res) => {
     }
     return response200WithData(res, data)
   } catch (e) {
+    console.log(e)
     return response500WithMessage(res, "Oups ! error T_T")
   }
 }
@@ -47,6 +48,7 @@ const getItem = async (req, res) => {
     }
     return response200WithData(res, data)
   } catch (e) {
+    console.log(e)
     return response500WithMessage(res, "Oups ! error T_T")
   }
 }
