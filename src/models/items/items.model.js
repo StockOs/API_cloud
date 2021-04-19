@@ -103,7 +103,7 @@ const deleteItem = async (userId, keyItem) => {
   return deleteItem
 }
 const updateName = async (objectUpdate, userId, keyItem) => {
-  const resName = db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
+  const resName = await db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
 
   return resName
 }
