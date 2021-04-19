@@ -104,7 +104,6 @@ const deleteItem = async (userId, keyItem) => {
 }
 
 const updateItem = async (objectUpdate, userId, keyItem) => {
-  console.log(objectUpdate.quantity)
   const resName = db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
   const resPrice = db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
 

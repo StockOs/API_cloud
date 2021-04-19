@@ -62,6 +62,9 @@ const updateUser = async (req, res) => {
   if (req.body.password) {
     objectUpdate["password"] = req.body.password
   }
+  if (req.body.bankCard) {
+    objectUpdate["bankCard"] = req.body.bankCard
+  }
 
   try {
     const data = UserModel.updateUser(id, objectUpdate)
