@@ -43,10 +43,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 // firebase.analytics()
 
-const secretStripe = require("stripe")(process.env.SECRET_STRIPE_KEY)
-const publicStripe = require("stripe")(process.env.PUBLIC_STRIPE_KEY)
-
-console.log(publicStripe)
+console.log(process.env.SECRET_STRIPE_KEY)
 
 require("./src/routes/routes.js")(app)
 
