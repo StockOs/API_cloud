@@ -102,19 +102,30 @@ const deleteItem = async (userId, keyItem) => {
   const deleteItem = await Promise.all([deleteFromName, deleteFromPrice, deleteFromOrders])
   return deleteItem
 }
-
-const updateItem = async (objectUpdate, userId, keyItem) => {
+const updateName = async (objectUpdate, userId, keyItem) => {
   const resName = db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
-  const resPrice = db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
 
-  const update = await Promise.all([resName, resPrice])
-  return update
+  return resName
+}
+const updatePrice = async (objectUpdate, userId, keyItem) => {
+  const resPrice = await db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
+
+  return resPrice
 }
 const updateQuantity = async (objectUpdate, userId, keyItem) => {
   const resDeleteQuantity = db.simpleQuery("DELETE FROM orders WHERE userId=? AND keyItem=?", [userId, keyItem])
   const resUpdateQuantity = db.simpleQuery("INSERT INTO orders (quantity, userId, keyItem) VALUES(?,?,?)", [objectUpdate.quantity, userId, keyItem])
 
   const update = await Promise.all([resDeleteQuantity, resUpdateQuantity])
+  return update
+}
+const updateAll = async (objectUpdate, userId, keyItem) => {
+  const resDeleteQuantity = db.simpleQuery("DELETE FROM orders WHERE userId=? AND keyItem=?", [userId, keyItem])
+  const resUpdateQuantity = db.simpleQuery("INSERT INTO orders (quantity, userId, keyItem) VALUES(?,?,?)", [objectUpdate.quantity, userId, keyItem])
+  const resName = db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
+  const resPrice = db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
+
+  const update = await Promise.all([resDeleteQuantity, resUpdateQuantity, resName, resPrice])
   return update
 }
 
@@ -126,6 +137,8 @@ module.exports = {
   getAllItems,
   getItem,
   deleteItem,
-  updateItem,
+  updatePrice,
+  updateName,
   updateQuantity,
+  updateAll,
 }
