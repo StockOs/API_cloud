@@ -85,6 +85,15 @@ const updateItem = async (req, res) => {
       return response400WithMessage(res, "You don't have this item")
     } else {
       objectUpdate["quantity"] = req.body.quantity
+      try {
+        const data = await ItemModel.updateQuantity(objectUpdate, userId, keyItem)
+        if (data[0].changedRows === 0) {
+          return response400WithMessage(res, "This item doesn't exist")
+        }
+        return response201WithMessage(res, "update successfully")
+      } catch (e) {
+        return response500WithMessage(res, "Oups ! error T_T")
+      }
     }
   }
 

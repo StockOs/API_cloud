@@ -107,10 +107,14 @@ const updateItem = async (objectUpdate, userId, keyItem) => {
   const resName = db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
   const resPrice = db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
 
+  const update = await Promise.all([resName, resPrice])
+  return update
+}
+const updateQuantity = async (objectUpdate, userId, keyItem) => {
   const resDeleteQuantity = db.simpleQuery("DELETE FROM orders WHERE userId=? AND keyItem=?", [userId, keyItem])
   const resUpdateQuantity = db.simpleQuery("INSERT INTO orders (quantity, userId, keyItem) VALUES(?,?,?)", [objectUpdate.quantity, userId, keyItem])
 
-  const update = await Promise.all([resName, resPrice, resDeleteQuantity, resUpdateQuantity])
+  const update = await Promise.all([resDeleteQuantity, resUpdateQuantity])
   return update
 }
 
@@ -123,4 +127,5 @@ module.exports = {
   getItem,
   deleteItem,
   updateItem,
+  updateQuantity,
 }

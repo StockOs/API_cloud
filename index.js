@@ -43,6 +43,11 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 // firebase.analytics()
 
+const secretStripe = require("stripe")(process.env.SECRET_STRIPE_KEY)
+const publicStripe = require("stripe")(process.env.PUBLIC_STRIPE_KEY)
+
+console.log(publicStripe)
+
 require("./src/routes/routes.js")(app)
 
 const PORT = process.env.PORT || 80

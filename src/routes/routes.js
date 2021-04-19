@@ -7,6 +7,7 @@ module.exports = (app) => {
   const categorieController = require("../controllers/categories/categories.controller.js")
   const authentificationController = require("../controllers/authentification/authentification.js")
   const itemController = require("../controllers/items/items.controller.js")
+  const paymentController = require("../controllers/payment/payment.controller.js")
 
   // Welcome API
   app.get("/", (req, res) => {
@@ -29,6 +30,9 @@ module.exports = (app) => {
   app.get("/api/user/info", userController.getInfo)
   app.put("/api/user/:id", userController.updateUser)
   app.delete("/api/user/:id", userController.deleteUser)
+
+  // Routes payment
+  app.post("/api/payment", paymentController.payment)
 
   // Routes categories
   app.get("/api/categories", categorieController.getAllCategories)
