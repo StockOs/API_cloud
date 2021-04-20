@@ -43,7 +43,7 @@ firebase.initializeApp(firebaseConfig)
 
 require("./src/routes/routes.js")(app)
 
-const PORT = 3000
+const PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
   figlet(
     process.env.NAME_APP,
