@@ -16,7 +16,7 @@ const verifyIduser = async (email, password) => {
 }
 
 const getInfo = async (id) => {
-  const res = await db.simpleQuery("SELECT id, name, email, business  FROM users WHERE id=?", [id])
+  const res = await db.simpleQuery("SELECT * FROM users WHERE id=?", [id])
   return res
 }
 

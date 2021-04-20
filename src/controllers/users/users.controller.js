@@ -69,7 +69,7 @@ const updateUser = async (req, res) => {
   try {
     const data = UserModel.updateUser(id, objectUpdate)
     if (!data) {
-      return response400WithMessage(res, "Oups ! error T_T")
+      return response400WithMessage(res, "A caractère is not invalid")
     }
     return response201WithMessage(res, "Updated successfuly")
   } catch (e) {
@@ -83,7 +83,7 @@ const deleteUser = async (req, res) => {
   try {
     const data = UserModel.deleteUser(id)
     if (!data) {
-      return response400WithMessage(res, "Oups ! error T_T")
+      return response400WithMessage(res, "This user is not defined")
     }
     return response201WithMessage(res, "deleted successfuly")
   } catch (e) {

@@ -1,8 +1,6 @@
 module.exports = (app) => {
   const { verifyToken } = require("../middleware/firebase/firebaseMiddleware.js")
 
-  const stripe = require("stripe")("sk_test_51IhsigDSZiNelETqeNJBlo62FfbUsZBk3CfkZ0ROhugBYjX6rVybIM1LXCvE35G6mf7HVh7Ai0V4zxEYb0QbD1LN00lsebOGYP")
-
   // Controller
   const databaseController = require("../controllers/database/database.controller.js")
   const userController = require("../controllers/users/users.controller.js")
@@ -35,35 +33,6 @@ module.exports = (app) => {
 
   // Routes payment
   app.post("/api/payment", paymentController.payment)
-  app.post("/api/payment", (req, res) => {
-    stripe.customers
-      .create({
-        email: req.body.stripeEmail,
-        source: req.body.stripeToken,
-        name: "Gauthier",
-        address: {
-          line1: "23 rue hello",
-          city: "New Delhi",
-          state: "Delhi",
-          country: "india",
-        },
-      })
-      .then((customer) => {
-        return stripe.paymentIntents.create({
-          amount: 7000,
-          description: "Web developement product",
-          currency: "eur",
-          customer: customer.id,
-        })
-      })
-      .then((charge) => {
-        console.log(charge)
-        res.send("Success")
-      })
-      .catch((err) => {
-        res.send(err)
-      })
-  })
 
   // Routes categories
   app.get("/api/categories", categorieController.getAllCategories)

@@ -43,7 +43,7 @@ const getItem = async (req, res) => {
   try {
     const data = await ItemModel.getItem(userId, keyItem)
     if (!data) {
-      return response400WithMessage(res, "You don't have items")
+      return response400WithMessage(res, "This keyItem is not defined")
     }
     return response200WithData(res, data)
   } catch (e) {

@@ -3,13 +3,13 @@ const PaymentModel = require("../../models/payment/payment.model.js")
 const { response201WithMessage, response400WithMessage, response500WithMessage } = require("../../helpers/expressRes.js")
 
 const payment = async (req, res) => {
+  const name = req.body.name
   const cardNumber = req.body.cardNumber
   const expMonth = req.body.expMonth
   const expYear = req.body.expYear
   const cardCVC = req.body.cardCVC
-  const firebaseId = req.user[0][0].uid
 
-  const name = req.body.name
+  const firebaseId = req.user[0][0].uid
 
   stripe.customers
     .create({
@@ -35,9 +35,9 @@ const payment = async (req, res) => {
       try {
         const data = PaymentModel.payment(cardNumber, firebaseId)
         if (!data) {
-          return response400WithMessage(res, "Oups ! error T_T")
+          return response400WithMessage(res, "Your bankcard is invalid")
         }
-        return response201WithMessage(res, "payment successfuly")
+        return response201WithMessage(res, "Successful payment")
       } catch (e) {
         return response500WithMessage(res, "Oups ! error T_T")
       }
