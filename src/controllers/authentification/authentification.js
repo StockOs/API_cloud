@@ -7,7 +7,7 @@ const UserModel = require("../../models/users/users.model.js")
 
 const { USERNAME_PATTERN } = require("../../helpers/regex/userconst.js")
 
-const { response201WithMessage, response201WithData, response400WithMessage, response401WithMessage, response500WithMessage } = require("../../helpers/expressRes")
+const { response200WithData, response201WithMessage, response201WithData, response400WithMessage, response401WithMessage, response500WithMessage } = require("../../helpers/expressRes")
 
 const validateUser = async (req, res) => {
   const token = firebaseMiddleware.extractToken(req)
@@ -39,6 +39,7 @@ const validateUser = async (req, res) => {
           }
         })
         .catch((e) => {
+          console.log(e)
           return response500WithMessage(res, "Register failed")
         })
     })
@@ -77,7 +78,7 @@ const register = async (req, res) => {
       displayName: req.body.name,
     })
     .then(() => {
-      return response201WithMessage(res, "Register successful")
+      return response201WithMessage(res, "Successful registration")
     })
     .catch(() => {
       return response500WithMessage(res, "Register failed")
