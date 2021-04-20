@@ -24,9 +24,18 @@ const admin = require("firebase-admin")
 
 const GOOGLE_APPLICATION_CREDENTIALS = require("./serviceAccountKey.json")
 
+// admin.initializeApp({
+//   credential: admin.credential.cert(GOOGLE_APPLICATION_CREDENTIALS),
+//   databaseURL: process.env.DATA_BASE_URL_FIREBASE,
+// })
+
 admin.initializeApp({
-  credential: admin.credential.cert(GOOGLE_APPLICATION_CREDENTIALS),
-  databaseURL: process.env.DATA_BASE_URL_FIREBASE,
+  credential: admin.credential.cert({
+    "projectId": process.env.PROJECT_ID,
+    "private_key": process.env.PRIVATE_KEY,
+    "client_email": process.env.CLIENT_EMAIL,
+  }),
+  databaseURL: process.env.DATA_BASE_URL_FIREBASE
 })
 
 // TODO: Replace the following with your app"s Firebase project configuration
@@ -45,7 +54,7 @@ firebase.initializeApp(firebaseConfig)
 
 require("./src/routes/routes.js")(app)
 
-const PORT = process.env.PORT || 3000
+const PORT = 3000
 app.listen(PORT, () => {
   figlet(
     process.env.NAME_APP,
