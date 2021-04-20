@@ -22,12 +22,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const firebase = require("firebase")
 const admin = require("firebase-admin")
 
+const serviceAccount = JSON.parse(process.env.GOOGLE_CREDS)
 admin.initializeApp({
-  credential: admin.credential.cert({
-    "projectId": process.env.PROJECT_ID,
-    "private_key": process.env.PRIVATE_KEY,
-    "client_email": process.env.CLIENT_EMAIL,
-  })
+  credential: admin.credential.cert(serviceAccount)
 })
 
 // TODO: Replace the following with your app"s Firebase project configuration
