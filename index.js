@@ -24,7 +24,7 @@ const admin = require("firebase-admin")
 
 const serviceAccount = JSON.parse(process.env.GOOGLE_CREDS)
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 })
 
 // TODO: Replace the following with your app"s Firebase project configuration
@@ -43,7 +43,7 @@ firebase.initializeApp(firebaseConfig)
 
 require("./src/routes/routes.js")(app)
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
   figlet(
     process.env.NAME_APP,

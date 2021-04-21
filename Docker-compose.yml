@@ -5,7 +5,7 @@ version: "3"
 
 services:
   database:
-    image: "mysql:8"
+    image: "mysql/mysql-server:8.0"
     environment:
       MYSQL_ROOT_PASSWORD: "${ROOT_PASSWORD_SQL_DOCKER}"
       MYSQL_DATABASE: "${DATABASE_SQL_DOCKER}"

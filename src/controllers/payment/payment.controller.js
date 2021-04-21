@@ -4,6 +4,7 @@ const { response201WithMessage, response400WithMessage, response500WithMessage }
 
 const payment = async (req, res) => {
   const name = req.body.name
+
   const cardNumber = req.body.cardNumber
   const expMonth = req.body.expMonth
   const expYear = req.body.expYear
@@ -11,11 +12,15 @@ const payment = async (req, res) => {
 
   const firebaseId = req.user[0][0].uid
 
-  stripe.customers
-    .create({
-      email: req.body.stripeEmail,
-      source: req.body.stripeToken,
-      name: name,
+  let paymentMethod
+  let customers
+  let paymentToCustomer
+  let paymentIntent
+  let charge
+
+  try {
+    paymentMethod = await stripe.paymentMethods.create({
+      type: "card",
       card: {
         number: cardNumber,
         exp_month: expMonth,
@@ -23,28 +28,45 @@ const payment = async (req, res) => {
         cvc: cardCVC,
       },
     })
-    .then((customer) => {
-      return stripe.paymentIntents.create({
-        amount: 1000,
-        description: "Subscribe at stockOs",
-        currency: "eur",
-        customer: customer.id,
-      })
+  } catch (e) {
+  }
+
+  try {
+    customers = await stripe.customers.create({
+      email: req.body.stripeEmail,
+      source: req.body.stripeToken,
+      name: name,
     })
-    .then((charge) => {
-      try {
-        const data = PaymentModel.payment(cardNumber, firebaseId)
-        if (!data) {
-          return response400WithMessage(res, "Your bankcard is invalid")
-        }
-        return response201WithMessage(res, "Successful payment")
-      } catch (e) {
-        return response500WithMessage(res, "Oups ! error T_T")
-      }
-    })
-    .catch((err) => {
-      res.send(err)
-    })
+  } catch (e) {
+  }
+
+  let id = customers.id
+
+  try {
+    paymentToCustomer = await stripe.paymentMethods.attach(paymentMethod.id, { customer: id })
+  } catch (e) {
+  }
+  try{
+    charge = await stripe.charges.create({
+    amount: 1000,
+    currency: 'eur',
+    source: 'tok_visa',
+    description: 'Subscribe at stockOs',
+  });
+  }catch(e){
+
+  }
+  try {
+    const data = await PaymentModel.payment(cardNumber, firebaseId)
+    if (!data) {
+      return response400WithMessage(res, "Your bankcard is invalid")
+    }
+    return response201WithMessage(res, "Successful payment")
+  } catch (e) {
+    return response500WithMessage(res, "Oups ! error T_T")
+  }
+  
 }
 
 module.exports = { payment }
+
