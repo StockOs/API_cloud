@@ -80,41 +80,17 @@ const updateItem = async (req, res) => {
   }
 
   if (req.body.quantity) {
-    const data = await ItemModel.checkQuantity(userId, keyItem)
-    if (!data) {
-      return response400WithMessage(res, "You don't have this item")
-    } else {
-      objectUpdate["quantity"] = req.body.quantity
-      try {
-        const data = await ItemModel.updateQuantity(objectUpdate, userId, keyItem)
-        if (data[0].changedRows === 0) {
-          return response400WithMessage(res, "This item doesn't exist")
-        }
-        return response201WithMessage(res, "update quantity successfully")
-      } catch (e) {
-        return response500WithMessage(res, "Oups ! error T_T")
-      }
+    objectUpdate["quantity"] = req.body.quantity
+  }
+
+  try {
+    const data = await ItemModel.updateItem(objectUpdate, userId, keyItem)
+    if (data.changedRows === 0) {
+      return response400WithMessage(res, "This item doesn't exist")
     }
-  } else if (req.body.price) {
-    try {
-      const data = await ItemModel.updatePrice(objectUpdate, userId, keyItem)
-      if (data.changedRows === 0) {
-        return response400WithMessage(res, "This item doesn't exist")
-      }
-      return response201WithMessage(res, "update name/price successfully")
-    } catch (e) {
-      return response500WithMessage(res, "Oups ! error T_T")
-    }
-  } else if (req.body.name) {
-    try {
-      const data = await ItemModel.updateName(objectUpdate, userId, keyItem)
-      if (data.changedRows === 0) {
-        return response400WithMessage(res, "This item doesn't exist")
-      }
-      return response201WithMessage(res, "update name/price successfully")
-    } catch (e) {
-      return response500WithMessage(res, "Oups ! error T_T")
-    }
+    return response201WithMessage(res, "update item successfully")
+  } catch (e) {
+    return response500WithMessage(res, "Oups ! error T_T")
   }
 }
 

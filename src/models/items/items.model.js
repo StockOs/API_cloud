@@ -101,30 +101,28 @@ const deleteItem = async (userId, keyItem) => {
   const deleteItem = await Promise.all([deleteFromName, deleteFromPrice, deleteFromOrders])
   return deleteItem
 }
-const updateName = async (objectUpdate, userId, keyItem) => {
-  const resName = await db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
+const updateItem = async (objectUpdate, userId, keyItem) => {
+  let name = objectUpdate.name
+  let price = objectUpdate.price
+  let quantity = objectUpdate.quantity
 
-  return resName
-}
-const updatePrice = async (objectUpdate, userId, keyItem) => {
-  const resPrice = await db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
+  let promise = []
+  if (name) {
+    const resName = db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
+    promise.push(resName)
+  }
+  if (price) {
+    const resPrice = db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
+    promise.push(resPrice)
+  }
+  if (quantity) {
+    const resDeleteQuantity = db.simpleQuery("DELETE FROM orders WHERE userId=? AND keyItem=?", [userId, keyItem])
+    const resUpdateQuantity = db.simpleQuery("INSERT INTO orders (quantity, userId, keyItem) VALUES(?,?,?)", [objectUpdate.quantity, userId, keyItem])
+    promise.push(resDeleteQuantity)
+    promise.push(resUpdateQuantity)
+  }
 
-  return resPrice
-}
-const updateQuantity = async (objectUpdate, userId, keyItem) => {
-  const resDeleteQuantity = db.simpleQuery("DELETE FROM orders WHERE userId=? AND keyItem=?", [userId, keyItem])
-  const resUpdateQuantity = db.simpleQuery("INSERT INTO orders (quantity, userId, keyItem) VALUES(?,?,?)", [objectUpdate.quantity, userId, keyItem])
-
-  const update = await Promise.all([resDeleteQuantity, resUpdateQuantity])
-  return update
-}
-const updateAll = async (objectUpdate, userId, keyItem) => {
-  const resDeleteQuantity = db.simpleQuery("DELETE FROM orders WHERE userId=? AND keyItem=?", [userId, keyItem])
-  const resUpdateQuantity = db.simpleQuery("INSERT INTO orders (quantity, userId, keyItem) VALUES(?,?,?)", [objectUpdate.quantity, userId, keyItem])
-  const resName = db.simpleQuery("UPDATE items_name SET name = ? WHERE userId = ? AND keyItem=?", [objectUpdate.name, userId, keyItem])
-  const resPrice = db.simpleQuery("UPDATE items_price SET price = ? WHERE userId = ? AND keyItem=?", [objectUpdate.price, userId, keyItem])
-
-  const update = await Promise.all([resDeleteQuantity, resUpdateQuantity, resName, resPrice])
+  const update = await Promise.all([promise])
   return update
 }
 
@@ -136,8 +134,5 @@ module.exports = {
   getAllItems,
   getItem,
   deleteItem,
-  updatePrice,
-  updateName,
-  updateQuantity,
-  updateAll,
+  updateItem,
 }

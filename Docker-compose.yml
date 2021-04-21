@@ -1,0 +1,20 @@
+# docker compose up
+# docker compose --env-file .env up
+
+version: "3"
+
+services:
+  database:
+    image: "mysql:8"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${ROOT_PASSWORD_SQL_DOCKER}"
+      MYSQL_DATABASE: "${DATABASE_SQL_DOCKER}"
+      MYSQL_USER: "${USER_SQL_DOCKER}"
+      MYSQL_PASSWORD: "${PASSWORD_SQL_DOCKER}"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "cours:/var/lib/mysql"
+
+volumes:
+  cours:
