@@ -1,3 +1,17 @@
+executors:
+  my-executor:
+    docker:
+      - image: "cimg/base:stable"
+
+jobs:
+  Hello-StockOS:
+    executor: node/default
+    steps:
+      - run:
+          name: Hello StockOS
+          command: |
+            echo 'Hello StockOS'
+
 orbs:
   node: circleci/node@4.0.1
 version: 2.1
