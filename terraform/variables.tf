@@ -7,7 +7,6 @@ variable "email_address" {
   sensitive   = true
 
 }
-
 variable "heroku_api_key" {
 
   description = "Your Heroku API key"
@@ -17,3 +16,4 @@ variable "heroku_api_key" {
   sensitive   = true
 
 }
+

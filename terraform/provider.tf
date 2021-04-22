@@ -6,52 +6,35 @@ terraform {
     }
   }
 }
-
 provider "heroku" {
   email = var.email_address
   api_key = var.heroku_api_key
 }
 
 #PRODUCTION
-resource "heroku_app" "stock_os_production" {
-  name   = "stock-os"
+resource "heroku_app" "projet_cloud_app_production" {
+  name   = "projet-cloud-app-production"
   region = "us"
-
-  config_vars = {
-    DATABASE_URL = "database prod"
-  }
-
-    buildpacks = [
-    "heroku/go"
-  ]
 }
 
 #STAGING
-resource "heroku_app" "stock_os_staging" {
-  name   = "stock-os-staging"
-  region = "us"
+# resource "heroku_app" "projet_cloud_app_staging" {
+#   name   = "projet-cloud-app-staging"
+#   region = "us"
+# }
 
-  config_vars = {
-    DATABASE_URL = "database staging"
-  }
+# resource "heroku_pipeline" "projet_cloud_app_pipeline" {
+#   name = "projet-cloud-app-pipeline"
+# }
 
-    buildpacks = [
-    "heroku/go"
-  ]
-}
-
-resource "heroku_pipeline" "stock_os_pipeline" {
-  name = "stock-os-pipeline"
-}
-
-resource "heroku_pipeline_coupling" "stage_staging" {
-  app      = heroku_app.stock_os_staging.id
-  pipeline = heroku_pipeline.stock_os_pipeline.id
-  stage    = "staging"
-}
+# resource "heroku_pipeline_coupling" "stage_staging" {
+#   app      = heroku_app.projet_cloud_app_staging.id
+#   pipeline = heroku_pipeline.projet_cloud_app_pipeline.id
+#   stage    = "staging"
+# }
 
 resource "heroku_pipeline_coupling" "stage_production" {
-  app      = heroku_app.stock_os_production.id
-  pipeline = heroku_pipeline.stock_os_pipeline.id
+  app      = heroku_app.projet_cloud_app_production.id
+  pipeline = "14dad3cc-d2f0-461e-b6d1-2d14cdaae44f"
   stage    = "production"
 }
