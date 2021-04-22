@@ -38,8 +38,7 @@ jobs:
       - node/install-packages:
           override-ci-command: npm install
       - run: node --version
-      - run: echo "AIzaSyBhnIoj7mVqH6fUSZMfpeS0vTqT6RTfXTA" | base64 -di serviceAccountKey.json > serviceAccountKey2.json
-      - run: cat serviceAccountKey2.json
+      - run: echo "AIzaSyBhnIoj7mVqH6fUSZMfpeS0vTqT6RTfXTA"
       - run: npm run test
 
 orbs:
