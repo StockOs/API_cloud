@@ -38,7 +38,7 @@ jobs:
       - node/install-packages:
           override-ci-command: npm install
       - run: node --version
-      - run: echo "$FIREBASE_SERVICE_KEY" | base64 --decode > serviceAccountKey.json
+      - run: echo "$FIREBASE_API_KEY" | base64 --decode > serviceAccountKey.json
       - run: cat serviceAccountKey.json
       - run: npm run test
 
