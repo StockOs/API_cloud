@@ -1,4 +1,14 @@
 workflows:
   version: 2.1
+  jobs:
+  run-tests:
+    docker:
+      - image: circleci/node:10
+    steps:
+    - checkout
+    - run:
+        name: Hello stockOS
+        command: |
+          echo 'Hello stockOS'
 
 
