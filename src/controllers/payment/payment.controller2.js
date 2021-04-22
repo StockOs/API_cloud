@@ -5,9 +5,6 @@ const { response201WithMessage, response400WithMessage, response500WithMessage }
 const payment = async (req, res) => {
   const name = req.body.name
   const cardNumber = req.body.cardNumber
-  const expMonth = req.body.expMonth
-  const expYear = req.body.expYear
-  const cardCVC = req.body.cardCVC
 
   const firebaseId = req.user[0][0].uid
 
@@ -25,7 +22,7 @@ const payment = async (req, res) => {
         customer: customer.id,
       })
     })
-    .then((charge) => {
+    .then(() => {
       try {
         const data = PaymentModel.payment(cardNumber, firebaseId)
         if (!data) {

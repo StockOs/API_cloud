@@ -14,9 +14,6 @@ const payment = async (req, res) => {
 
   let paymentMethod
   let customers
-  let paymentToCustomer
-  let paymentIntent
-  let charge
 
   try {
     paymentMethod = await stripe.paymentMethods.create({
@@ -29,6 +26,7 @@ const payment = async (req, res) => {
       },
     })
   } catch (e) {
+    console.log(e)
   }
 
   try {
@@ -38,23 +36,25 @@ const payment = async (req, res) => {
       name: name,
     })
   } catch (e) {
+    console.log(e)
   }
 
   let id = customers.id
 
   try {
-    paymentToCustomer = await stripe.paymentMethods.attach(paymentMethod.id, { customer: id })
+    await stripe.paymentMethods.attach(paymentMethod.id, { customer: id })
   } catch (e) {
+    console.log(e)
   }
   try{
-    charge = await stripe.charges.create({
+    await stripe.charges.create({
     amount: 1000,
     currency: 'eur',
     source: 'tok_visa',
     description: 'Subscribe at stockOs',
-  });
+  })
   }catch(e){
-
+    console.log(e)
   }
   try {
     const data = await PaymentModel.payment(cardNumber, firebaseId)

@@ -44,6 +44,7 @@ const validateUser = async (req, res) => {
         })
     })
     .catch((e) => {
+      console.log(e)
       response401WithMessage(res, "Invalid token")
     })
 }

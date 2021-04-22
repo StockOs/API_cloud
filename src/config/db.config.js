@@ -1,4 +1,4 @@
-const process = require("process");
+const process = require("process")
 
 module.exports = {
   PORT: process.env.SQL_PORT,
@@ -6,4 +6,4 @@ module.exports = {
   USER: process.env.SQL_USER,
   PASSWORD: process.env.SQL_PASSWORD,
   DB: process.env.SQL_DB,
-};
+}
