@@ -16,7 +16,7 @@ jobs:
     steps:
       - checkout
       - node/install:
-          install-npm: true
+          install-yarn: true
       - run: node --version
 
 orbs:
