@@ -11,6 +11,13 @@ jobs:
           name: Hello StockOS
           command: |
             echo 'Hello StockOS'
+  Install-node-example:
+    executor: my-executor
+    steps:
+      - checkout
+      - node/install:
+          install-npm: true
+      - run: node --version
 
 orbs:
   node: circleci/node@4.0.1
@@ -19,3 +26,8 @@ workflows:
   StockOS:
     jobs:
       - Hello-StockOS
+      - Install-node-example:
+        requires:
+          - Hello-Tastr
+        context:
+          - DevDb
