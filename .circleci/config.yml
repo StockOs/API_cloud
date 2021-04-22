@@ -37,8 +37,9 @@ jobs:
           install-npm: true
       - node/install-packages:
           override-ci-command: npm install
-      - run: node --version
-      - run: npm run test
+      - run:
+          command: |
+            npm run test
 
 orbs:
   node: circleci/node@4.0.1
