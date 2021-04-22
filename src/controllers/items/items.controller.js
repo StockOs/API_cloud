@@ -1,6 +1,6 @@
 const ItemModel = require("../../models/items/items.model.js")
 
-const { response200WithData, response200WithMessage, response201WithMessage, response400WithMessage, response500WithMessage } = require("../../helpers/expressRes.js")
+const { response200WithData, response201WithMessage, response400WithMessage, response500WithMessage } = require("../../helpers/expressRes.js")
 
 const createItem = async (req, res) => {
   const userId = req.user[1]

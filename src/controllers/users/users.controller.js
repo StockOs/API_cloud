@@ -8,7 +8,7 @@ const register = async (req, res) => {
   const password = req.body.password
 
   try {
-    const data = await UserModel.addUser(name, email, password)
+    await UserModel.addUser(name, email, password)
     return response200WithMessage(res, "you are registered")
   } catch (e) {
     return response500WithMessage(res, e)
@@ -29,7 +29,7 @@ const signIn = async (req, res) => {
   }
 
   try {
-    const data = await UserModel.signIn(email, password)
+    await UserModel.signIn(email, password)
     return response200WithMessage(res, "you are connected")
   } catch (e) {
     return response500WithMessage(res, e)
@@ -87,6 +87,7 @@ const deleteUser = async (req, res) => {
     }
     return response201WithMessage(res, "deleted successfuly")
   } catch (e) {
+    console.log(e)
     return response500WithMessage(res, "Oups ! error T_T")
   }
 }

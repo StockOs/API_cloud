@@ -29,7 +29,7 @@ module.exports = (app) => {
   // Routes user
   app.get("/api/user/info", userController.getInfo)
   app.put("/api/user", userController.updateUser)
-  app.delete("/api/user/:id", userController.deleteUser)
+  app.delete("/api/user", userController.deleteUser)
 
   // Routes payment
   app.post("/api/payment", paymentController.payment)
