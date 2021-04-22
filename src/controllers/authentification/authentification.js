@@ -82,7 +82,6 @@ const register = async (req, res) => {
       return response201WithMessage(res, "Successful registration")
     })
     .catch(() => {
-      console.log(e)
       return response500WithMessage(res, "Register failed")
     })
 }
