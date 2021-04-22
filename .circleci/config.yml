@@ -1,12 +1,12 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
-
-jobs:
-  Hello-Tastr:
-    executor: node/default
-    steps:
-      - run:
-          name: Hello Tastr
-          command: |
-            echo 'Hello tastr'
+workflows:
+  jobs:
+    Hello-Tastr:
+      executor: node/default
+      steps:
+        - run:
+            name: Hello Tastr
+            command: |
+              echo 'Hello tastr'
