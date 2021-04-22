@@ -49,3 +49,4 @@ workflows:
       - Hello-StockOS
       - Install-node-example
       - Verify-eslint
+      - Test-mocha
