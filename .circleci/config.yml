@@ -29,17 +29,6 @@ jobs:
       - run:
           command: |
             npm run eslint
-  Test-mocha:
-    executor: my-executor
-    steps:
-      - checkout
-      - node/install:
-          install-npm: true
-      - node/install-packages:
-          override-ci-command: npm install
-      - run: node --version
-      - run: echo "AIzaSyBhnIoj7mVqH6fUSZMfpeS0vTqT6RTfXTA"
-      - run: npm run test
 
 orbs:
   node: circleci/node@4.0.1
@@ -50,4 +39,3 @@ workflows:
       - Hello-StockOS
       - Install-node-example
       - Verify-eslint
-      - Test-mocha
