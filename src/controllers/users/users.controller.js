@@ -87,6 +87,7 @@ const deleteUser = async (req, res) => {
     }
     return response201WithMessage(res, "deleted successfuly")
   } catch (e) {
+    console.log(e)
     return response500WithMessage(res, "Oups ! error T_T")
   }
 }
