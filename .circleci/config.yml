@@ -1,13 +1,12 @@
-executors:
-  my-executor:
-    docker:
-      - image: "cimg/base:stable"
+version: 2.1
+orbs:
+  node: circleci/node@3.0.0
 
 jobs:
-  Hello-stockOS:
+  Hello-Tastr:
     executor: node/default
     steps:
       - run:
-          name: Hello stockOS
+          name: Hello Tastr
           command: |
-            echo 'Hello stockOS'
+            echo 'Hello tastr'
