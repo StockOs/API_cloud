@@ -37,11 +37,10 @@ jobs:
           install-npm: true
       - node/install-packages:
           override-ci-command: npm install
-      - run: base64 --decode > serviceAccountKey.json
+      - run: node --version
+      - run: echo "$FIREBASE_SERVICE_KEY" | base64 --decode > serviceAccountKey.json
       - run: cat serviceAccountKey.json
-      - run:
-          command: |
-            npm run test
+      - run: npm run test
 
 orbs:
   node: circleci/node@4.0.1
