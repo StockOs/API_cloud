@@ -16,10 +16,10 @@ global.testToken
 
 describe("Test task API Routes Auth", function () {
 
-  it("POST /auth/user/signIn : Log user", function (done) {
+  it("POST /auth/user/login : Log user", function (done) {
     const newLogin = {
-      "email": "lucasfront@gmail.com",
-      "password": "lucasfront"
+      "email": "salsa@gmail.com",
+      "password": "salsa69"
     }
     request
       .post("/auth/user/login")
