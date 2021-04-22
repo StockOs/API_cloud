@@ -28,6 +28,6 @@ workflows:
       - Hello-StockOS
       - Install-node-example:
         requires:
-          - Hello-Tastr
+          - Hello-StockOS
         context:
           - DevDb
