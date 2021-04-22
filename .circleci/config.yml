@@ -4,4 +4,10 @@ orbs:
 workflows:
   node-tests:
     jobs:
-      - node/test
+      Hello-stockOS:
+        executor: node/default
+        steps:
+          - run:
+              name: Hello stockOS
+              command: |
+                echo 'Hello stockOS'
