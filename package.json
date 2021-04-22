@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --exit",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "eslint": "eslint ./src",
@@ -37,6 +37,9 @@
     "yarn": "^1.22.10"
   },
   "devDependencies": {
-    "eslint": "^7.24.0"
+    "chai": "^4.3.4",
+    "eslint": "^7.24.0",
+    "mocha": "^8.3.2",
+    "supertest": "^6.1.3"
   }
 }
