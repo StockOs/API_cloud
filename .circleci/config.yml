@@ -37,7 +37,7 @@ jobs:
           install-npm: true
       - node/install-packages:
           override-ci-command: npm install
-      - run: echo "$GOOGLE_CREDS" | base64 --decode > serviceAccountKey.json
+      - run: base64 --decode > serviceAccountKey.json
       - run:
           command: |
             npm run test
