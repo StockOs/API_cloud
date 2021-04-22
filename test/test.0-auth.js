@@ -51,6 +51,7 @@ describe('/POST user', () => {
           .post('/auth/user/login')
           .send(newLogin)
           .end((err, res) => {
+              console.log(res.should.have)
                 res.should.have.status(201);
 
                 // res.body.should.be.a('array');
